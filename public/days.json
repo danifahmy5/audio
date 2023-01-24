@@ -1,0 +1,30 @@
+[
+    {
+        "value": "Monday",
+        "name": "Senin"
+    },
+    {
+        "value": "Tuesday",
+        "name": "Selasa"
+    },
+    {
+        "value": "Wednesday",
+        "name": "Rabu"
+    },
+    {
+        "value": "Thursday",
+        "name": "Kamis"
+    },
+    {
+        "value": "Friday",
+        "name": "Jumat"
+    },
+    {
+        "value": "Saturday",
+        "name": "Sabtu"
+    },
+    {
+        "value": "Sunday",
+        "name": "Minggu"
+    }
+]
