@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
-
 Route::get('/', [HomeController::class, 'index']);
 
 Route::resource('schadules', SchaduleController::class)->middleware('auth');

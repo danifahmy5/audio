@@ -72,7 +72,9 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => $_SERVER["DOCUMENT_ROOT"] . '/audio',
+
+        // public_path('storage') => storage_path('app/public'),
     ],
 
 ];
