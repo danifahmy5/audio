@@ -16,7 +16,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="name">Nama</label>
-                                <input type="text" name="name" value="testing" id="name"
+                                <input type="text" name="name" id="name"
                                     class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
                                     placeholder="masukkan nama">
                                 @error('name')
@@ -26,8 +26,18 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label for="shuffle">Jenis pemutaran</label>
+                                <select type="text" name="shuffle" id="shuffle"
+                                    class="form-control @error('shuffle') is-invalid @enderror" value="{{ old('shuffle') }}"
+                                    placeholder="masukkan nama">
+                                    <option value="">normal</option>
+                                    <option value="true">acak</option>
+                                </select>
+
+                            </div>
+                            <div class="form-group">
                                 <label for="duration">Durasi</label>
-                                <input type="number" name="duration" value="10" id="duration"
+                                <input type="number" name="duration" id="duration"
                                     class="form-control @error('duration') is-invalid @enderror"
                                     value="{{ old('duration') }}" placeholder="masukkan durasi dalam format menit">
                                 @error('duration')
@@ -41,7 +51,7 @@
                                 <select class="select2 form-control" multiple type="text" name="days[]" id="days"
                                     class="form-control" placeholder="masukkan nama">
                                     @foreach ($days as $day)
-                                        <option selected value="{{ $day->value }}">
+                                        <option value="{{ $day->value }}">
                                             {{ $day->name }}
                                         </option>
                                     @endforeach
@@ -57,9 +67,7 @@
                                 <select class="select2 form-control" multiple type="text" name="times[]" id="times"
                                     class="form-control" placeholder="masukkan nama">
                                     @foreach ($times as $time)
-                                        <option
-                                            {{ $time == '08:00' || $time == '09:00' || $time == '10:00' ? 'selected' : '' }}
-                                            value="{{ $time }}">
+                                        <option value="{{ $time }}">
                                             {{ $time }}
                                         </option>
                                     @endforeach
@@ -75,7 +83,7 @@
                                 <select class="select2 form-control" multiple type="text" name="audio[]" id="audio"
                                     class="form-control" placeholder="masukkan nama">
                                     @foreach ($files as $file)
-                                        <option selected value="{{ $file->id }}">
+                                        <option value="{{ $file->id }}">
                                             {{ $file->name }}
                                         </option>
                                     @endforeach

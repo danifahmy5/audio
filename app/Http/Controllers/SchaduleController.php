@@ -23,7 +23,6 @@ class SchaduleController extends Controller
      */
     public function index()
     {
-        dd(Session::all());
         $schadules = Schadule::with('times')
             ->paginate(10);
 
@@ -80,7 +79,8 @@ class SchaduleController extends Controller
 
         $schadule = Schadule::create([
             'name' => $request->input('name'),
-            'duration' => $request->input('duration')
+            'duration' => $request->input('duration'),
+            'shuffle' => $request->input('shuffle', false)
         ]);
 
         foreach ($request->input('days') as $day) {
@@ -159,6 +159,7 @@ class SchaduleController extends Controller
 
         $schadule->update([
             'name' => $request->input('name'),
+            'shuffle' => $request->input('shuffle', false)
         ]);
 
         SchaduleDetail::where(['schadule_id' => $id])->delete();

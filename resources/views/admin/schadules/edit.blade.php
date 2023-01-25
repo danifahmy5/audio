@@ -27,6 +27,16 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label for="shuffle">Jenis pemutaran</label>
+                                <select type="text" name="shuffle" id="shuffle"
+                                    class="form-control @error('shuffle') is-invalid @enderror" value="{{ old('shuffle') }}"
+                                    placeholder="masukkan nama">
+                                    <option value="">normal</option>
+                                    <option {{ $schadule->shuffle ? 'selected' : '' }} value="1">acak </option>
+                                </select>
+
+                            </div>
+                            <div class="form-group">
                                 <label for="duration">Durasi</label>
                                 <input type="number" name="duration" value="10" id="duration"
                                     class="form-control @error('duration') is-invalid @enderror"

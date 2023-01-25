@@ -13,11 +13,12 @@
 
 <body>
     <input type="hidden" value="{{ json_encode($dirAudio) }}" id="my-audio-list">
+    <input type="hidden" value="{{ $schadules->duration }}" id="my-duration">
     <div class="app">
         <nav>
             <span id="connect-link">
                 <a href="{{ route('login') }}"
-                    style="color: color(srgb 0.6805 0.7916 0.9474);
+                    style="color: white;
                 text-decoration-line: none;">Login</a>
 
             </span>
@@ -60,45 +61,21 @@
                     <h4>Dani Fahmy Rosyid</h4>
                 </div>
             </div>
-        @endforeach
-
-        {{-- <div class="library-song" id="2">
-            <img src=""
-                alt="" />
-            <div class="library-song-info">
-                <h3>Song 3</h3>
-                <h4>Artist 3</h4>
-            </div>
-        </div>
-        <div class="library-song" id="3">
-            <img src="https://chillhop.com/wp-content/uploads/2020/07/ef95e219a44869318b7806e9f0f794a1f9c451e4-1024x1024.jpg"
-                alt="" />
-            <div class="library-song-info">
-                <h3>Song 4</h3>
-                <h4>Artist 4</h4>
-            </div>
-        </div>
-        <div class="library-song" id="4">
-            <img src="https://chillhop.com/wp-content/uploads/2020/07/ff35dede32321a8aa0953809812941bcf8a6bd35-1024x1024.jpg"
-                alt="" />
-            <div class="library-song-info">
-                <h3>Song 5</h3>
-                <h4>Artist 5</h4>
-            </div>
-        </div>
-        <div class="library-song" id="5">
-            <img src="https://chillhop.com/wp-content/uploads/2020/09/0255e8b8c74c90d4a27c594b3452b2daafae608d-1024x1024.jpg"
-                alt="" />
-            <div class="library-song-info">
-                <h3>Song 6</h3>
-                <h4>Artist 6</h4>
-            </div>
-        </div> --}}
+        @endforeach 
         <div class="add-song">Add Song <i class="far fa-plus-square"></i></div>
     </div>
+    <script>
+        const duration = document.getElementById('my-duration').value;
+        const timeout = parseInt(duration) * 60 * 1000
+
+        setTimeout(() => {
+            window.close();
+        }, timeout);
+    </script>
 
     <script src="vanilla-js-audio-player-main/scripts/songs.js"></script>
     <script src="vanilla-js-audio-player-main/scripts/app.js"></script>
+
 </body>
 
 </html>

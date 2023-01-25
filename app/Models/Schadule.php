@@ -14,6 +14,7 @@ class Schadule extends Model
     protected $fillable = [
         'name',
         'duration',
+        'shuffle',
         'status'
     ];
 
