@@ -18,6 +18,14 @@ use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
+
+Route::get('/symlink', function(){
+    $target = storage_path('app/public');  
+    $link = $_SERVER['DOCUMENT_ROOT'] . '/audio/storage';
+    
+    symlink($target,$link); 
+});
+
 Route::get('/', [HomeController::class, 'index']);
 
 Route::resource('schadules', SchaduleController::class)->middleware('auth');

@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'username' => 'ros',
             'password' => Hash::make('123123')
-        ], [
+        ]);
+        DB::table('users')->insert( [
             'username' => 'edp',
             'password' => Hash::make('edpsip')
         ]);
