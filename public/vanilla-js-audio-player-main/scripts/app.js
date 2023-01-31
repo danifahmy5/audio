@@ -45,6 +45,12 @@ function playSong(song) {
     playPause();
 }
 
+//* sound volume control
+const volume = document.querySelector(".sound-control input");
+volume.addEventListener("change", () => {
+    audio.volume = volume.value / 100;
+});
+
 //*player control actions
 //play||pause action
 const playPauseIcon = document.getElementById("play-pause");
@@ -54,8 +60,8 @@ playPauseIcon.addEventListener("click", () => {
 });
 
 function playPause() {
+    audio.volume = volume.value / 100;
     if (playStatus === false) {
-        console.log(audio);
         playPauseIcon.className = "fas fa-pause";
         audio.play();
         cover.classList.add("playing");
@@ -68,11 +74,6 @@ function playPause() {
         playStatus = false;
     }
 }
-//* sound volume control
-const volume = document.querySelector(".sound-control input");
-volume.addEventListener("change", () => {
-    audio.volume = volume.value / 100;
-});
 
 //*defining audio and song info
 //format current/duration time

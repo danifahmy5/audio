@@ -46,7 +46,7 @@
         </div>
         <div class="sound-control">
             <i class="fas fa-volume-down"></i>
-            <input type="range" max="100" step="1" />
+            <input type="range" max="100" value="{{ $schadules->volume }}" step="1" />
             <i class="fas fa-volume-up"></i>
         </div>
         <audio src="{{ $dirAudio[0]['audio'] }}"></audio>
@@ -61,7 +61,7 @@
                     <h4>Dani Fahmy Rosyid</h4>
                 </div>
             </div>
-        @endforeach 
+        @endforeach
         <div class="add-song">Add Song <i class="far fa-plus-square"></i></div>
     </div>
     <script>

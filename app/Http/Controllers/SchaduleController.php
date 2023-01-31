@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Audio;
+use App\Models\PrayerSchadule;
 use App\Models\Schadule;
 use App\Models\SchaduleDetail;
 use App\Models\SchaduleTimes;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,6 +33,44 @@ class SchaduleController extends Controller
         return view('admin.schadules.index', compact('schadules'));
     }
 
+    public function updatePraySchadule()
+    {
+
+        $time = $this->_formatTimeSchadule('15:08');
+
+
+
+        die;
+        $startDate = 1;
+        $success = 0;
+        $error = 0;
+        $date = Carbon::now();
+        $daysInMonth = Carbon::now()->daysInMonth;
+
+        for ($i = $startDate; $i <= $daysInMonth; $i++) {
+            $newDate = Carbon::create($date->year, $date->month, $i)->format('Y-m-d');
+            $request = Http::get("https://api.banghasan.com/sholat/format/json/jadwal/kota/744/tanggal/$newDate");
+
+            if ($request->successful()) {
+                $schedule = $request->object()->jadwal->data;
+                PrayerSchadule::create([
+                    'subuh' =>  $schedule->subuh,
+                    'dhuhur' => $schedule->dzuhur,
+                    'ashar' => $schedule->ashar,
+                    'manggrip' => $schedule->maghrib,
+                    'isya' => $schedule->isya,
+                    'date' => $newDate
+                ]);
+                $success++;
+            } else {
+                $error++;
+            }
+        }
+
+        Log::info("berhasil update jadwal shalat success $success error $error");
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -41,7 +83,7 @@ class SchaduleController extends Controller
         $files = Audio::all();
 
         $data = [
-            'times' => json_decode($times),
+            'times' => $schedule->json_decode($times),
             'days' => json_decode($days),
             'files' => $files
         ];
@@ -79,8 +121,9 @@ class SchaduleController extends Controller
 
         $schadule = Schadule::create([
             'name' => $request->input('name'),
+            'volume' => $request->input('volume', 80),
             'duration' => $request->input('duration'),
-            'shuffle' => $request->input('shuffle', false)
+            'shuffle' => $request->input('shuffle') ? true : false
         ]);
 
         foreach ($request->input('days') as $day) {
@@ -159,6 +202,8 @@ class SchaduleController extends Controller
 
         $schadule->update([
             'name' => $request->input('name'),
+            'volume' => $request->input('volume', 80),
+            'duration' => $request->input('duration'),
             'shuffle' => $request->input('shuffle', false)
         ]);
 

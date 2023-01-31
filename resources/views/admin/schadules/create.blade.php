@@ -47,6 +47,17 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label for="volume">Volume</label>
+                                <input type="number" name="volume" id="volume"
+                                    class="form-control @error('volume') is-invalid @enderror" value="{{ old('volume') }}"
+                                    placeholder="masukkan volume audio">
+                                @error('volume')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label for="days">Hari</label>
                                 <select class="select2 form-control" multiple type="text" name="days[]" id="days"
                                     class="form-control" placeholder="masukkan nama">

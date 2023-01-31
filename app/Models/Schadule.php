@@ -15,6 +15,7 @@ class Schadule extends Model
         'name',
         'duration',
         'shuffle',
+        'volume',
         'status'
     ];
 

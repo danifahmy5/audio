@@ -27,6 +27,11 @@
                                     <td>:</td>
                                     <td>{{ $schadule->duration }} Menit</td>
                                 </tr>
+                                <tr>
+                                    <th>Volume</th>
+                                    <td>:</td>
+                                    <td>{{ $schadule->volume }} %</td>
+                                </tr>
                             </table>
                         </div>
                         <div class="row mt-2">

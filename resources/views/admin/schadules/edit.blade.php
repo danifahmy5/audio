@@ -38,11 +38,23 @@
                             </div>
                             <div class="form-group">
                                 <label for="duration">Durasi</label>
-                                <input type="number" name="duration" value="10" id="duration"
+                                <input type="number" name="duration" id="duration"
                                     class="form-control @error('duration') is-invalid @enderror"
                                     value="{{ old('duration') ? old('duration') : $schadule->duration }}"
                                     placeholder="masukkan durasi dalam format menit">
                                 @error('duration')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="volume">Volume</label>
+                                <input type="number" name="volume"id="volume"
+                                    class="form-control @error('volume') is-invalid @enderror"
+                                    value="{{ old('volume') ? old('volume') : $schadule->volume }}"
+                                    placeholder="masukkan durasi dalam format menit">
+                                @error('volume')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -54,7 +66,8 @@
                                     class="form-control" placeholder="masukkan nama">
                                     @foreach ($days as $day)
                                         @foreach ($selected_days as $sd)
-                                            <option {{ $day->value == $sd ? 'selected' : '' }} value="{{ $day->value }}">
+                                            <option {{ $day->value == $sd ? 'selected' : '' }}
+                                                value="{{ $day->value }}">
                                                 {{ $day->name }}
                                             </option>
                                         @endforeach
