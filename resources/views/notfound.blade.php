@@ -149,7 +149,11 @@
             <a href="{{ route('login') }}">Login</a>
         </div>
     </div>
-
+    <script>
+        setTimeout(() => {
+            window.close();
+        }, 10000);
+    </script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
 </html>

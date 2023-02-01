@@ -33,49 +33,6 @@ class SchaduleController extends Controller
         return view('admin.schadules.index', compact('schadules'));
     }
 
-    public function updatePraySchadule()
-    {
-
-        $time = $this->_formatTimeSchadule('15:08');
-
-
-
-        die;
-        $startDate = 1;
-        $success = 0;
-        $error = 0;
-        $date = Carbon::now();
-        $daysInMonth = Carbon::now()->daysInMonth;
-
-        for ($i = $startDate; $i <= $daysInMonth; $i++) {
-            $newDate = Carbon::create($date->year, $date->month, $i)->format('Y-m-d');
-            $request = Http::get("https://api.banghasan.com/sholat/format/json/jadwal/kota/744/tanggal/$newDate");
-
-            if ($request->successful()) {
-                $schedule = $request->object()->jadwal->data;
-                PrayerSchadule::create([
-                    'subuh' =>  $schedule->subuh,
-                    'dhuhur' => $schedule->dzuhur,
-                    'ashar' => $schedule->ashar,
-                    'manggrip' => $schedule->maghrib,
-                    'isya' => $schedule->isya,
-                    'date' => $newDate
-                ]);
-                $success++;
-            } else {
-                $error++;
-            }
-        }
-
-        Log::info("berhasil update jadwal shalat success $success error $error");
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(): Response
     {
         $times = File::get('times.json');

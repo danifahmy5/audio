@@ -24,6 +24,27 @@ class AudioController extends Controller
             ->view('admin.audio.index', compact('audio'));
     }
 
+    public function mappingAudio()
+    {
+        $storage = Storage::files('public/audio');
+        foreach ($storage as $key => $file) {
+            $name = str_replace('public/audio/', '', $file);
+            if (Audio::where('name', $name)->count() < 1) {
+                Audio::create([
+                    'name' => $name
+                ]);
+            }
+        }
+    }
+
+    public function customSymlink()
+    {
+        $target = storage_path('app/public');
+        $link = $_SERVER['DOCUMENT_ROOT'] . '/audio/storage';
+
+        symlink($target, $link);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AudioController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PraySchaduleController;
 use App\Http\Controllers\SchaduleController;
 use App\Models\Audio;
 use Illuminate\Support\Facades\Route;
@@ -22,28 +23,12 @@ use Illuminate\Support\Facades\Storage;
 
 Auth::routes();
 
-Route::get('/symlink', function () {
-    $target = storage_path('app/public');
-    $link = $_SERVER['DOCUMENT_ROOT'] . '/audio/storage';
-
-    symlink($target, $link);
-});
 
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/testing', [SchaduleController::class, 'updatePraySchadule']);
-Route::get('/mapping/audio', function () {
-    $storage = Storage::files('public/audio');
+Route::middleware('auth')->group(function () {
+    Route::resource('schadules', SchaduleController::class);
+    Route::resource('audio', AudioController::class)->except('show');
 
-    foreach ($storage as $key => $file) {
-        $name = str_replace('public/audio/', '', $file);
-        if (Audio::where('name', $name)->count() < 1) {
-            Audio::create([
-                'name' => $name
-            ]);
-        }
-    }
+    Route::get('schadules/{id}/toggle', [SchaduleController::class, 'toggle'])->name('schadules.toggle');
+    Route::get('praying', [PraySchaduleController::class, 'index'])->name('pray.index');
 });
-Route::resource('schadules', SchaduleController::class)->middleware('auth');
-Route::resource('audio', AudioController::class)->except('show')->middleware('auth');
-Route::get('schadules/{id}/toggle', [SchaduleController::class, 'toggle'])
-    ->middleware('auth')->name('schadules.toggle');
