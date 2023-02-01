@@ -13,7 +13,7 @@
 
 <body>
     <input type="hidden" value="{{ json_encode($dirAudio) }}" id="my-audio-list">
-    <input type="hidden" value="{{ $schadules->duration }}" id="my-duration">
+    <input type="hidden" value="{{ is_null($schadules) ? 10 : $schadules->duration }}" id="my-duration">
     <div class="app">
         <nav>
             <span id="connect-link">

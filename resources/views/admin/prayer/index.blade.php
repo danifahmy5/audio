@@ -8,6 +8,10 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <h4>{{ __('Daftar jadwal sholat') }}</h4>
+                            <form method="GET" action="{{route('pray.sync')}}">
+                                <button class="btn btn-primary type="submit">Sync Data Sholat</button>
+
+                            </form>
                         </div>
                     </div>
                     <div class="card-body">

@@ -37,10 +37,11 @@ class SchaduleController extends Controller
     {
         $times = File::get('times.json');
         $days = File::get('days.json');
-        $files = Audio::all();
+        
+        $files = Audio::orderBy('id','DESC')->get();
 
         $data = [
-            'times' => $schedule->json_decode($times),
+            'times' => json_decode($times),
             'days' => json_decode($days),
             'files' => $files
         ];
@@ -74,11 +75,10 @@ class SchaduleController extends Controller
             'times' => ['required', 'array'],
             'audio' => ['required', 'array'],
         ]);
-
-
+  
         $schadule = Schadule::create([
             'name' => $request->input('name'),
-            'volume' => $request->input('volume', 80),
+            'volume' => $request->input('volume') ? $request->input('volume') : 80,
             'duration' => $request->input('duration'),
             'shuffle' => $request->input('shuffle') ? true : false
         ]);

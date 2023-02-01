@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('audio', AudioController::class)->except('show');
 
     Route::get('schadules/{id}/toggle', [SchaduleController::class, 'toggle'])->name('schadules.toggle');
-    Route::get('praying', [PraySchaduleController::class, 'index'])->name('pray.index');
-    Route::post('praying', [PraySchaduleController::class, 'changeAudio'])->name('pray.changeAudio');
+    Route::get('prayer', [PraySchaduleController::class, 'index'])->name('pray.index');
+    Route::get('prayer/sync', [PraySchaduleController::class, 'updatePraySchadule'])->name('pray.sync');
+    Route::post('prayer', [PraySchaduleController::class, 'changeAudio'])->name('pray.changeAudio');
 });

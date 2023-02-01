@@ -18,7 +18,7 @@ class AudioController extends Controller
      */
     public function index(): Response
     {
-        $audio = Audio::paginate(10);
+        $audio = Audio::orderBy('id','DESC')->paginate(10);
 
         return response()
             ->view('admin.audio.index', compact('audio'));
@@ -35,6 +35,8 @@ class AudioController extends Controller
                 ]);
             }
         }
+
+        return 'berhasil mapping audio';
     }
 
     public function customSymlink()

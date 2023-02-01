@@ -17,7 +17,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="name">Nama</label>
-                                <input type="text" name="name" value="testing" id="name"
+                                <input type="text" name="name" id="name"
                                     class="form-control @error('name') is-invalid @enderror"
                                     value="{{ old('name') ? old('name') : $schadule->name }}" placeholder="masukkan nama">
                                 @error('name')

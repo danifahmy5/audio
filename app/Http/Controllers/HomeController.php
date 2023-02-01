@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
-    private string $prayAudio = 'sholat.mp3';
+    private string $prayAudio = 'sholat.mp3'; 
 
     public function index()
     {
@@ -34,6 +34,14 @@ class HomeController extends Controller
                 $dirAudio[] =  [
                     'name' => $this->prayAudio,
                     'audio' => asset("storage/audio/$this->prayAudio"),
+                    'cover' => asset('bg') . '/' . $backgrounds[array_rand($backgrounds)],
+                    'id' => $key,
+                    'artist' => 'Dani fahmy rosyid'
+                ];
+
+                $dirAudio[] =  [
+                    'name' => 'setelah-sholat.mp3',
+                    'audio' => asset("storage/audio/setelah-sholat.mp3"),
                     'cover' => asset('bg') . '/' . $backgrounds[array_rand($backgrounds)],
                     'id' => $key,
                     'artist' => 'Dani fahmy rosyid'
