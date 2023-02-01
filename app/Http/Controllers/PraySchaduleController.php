@@ -5,27 +5,59 @@ namespace App\Http\Controllers;
 use App\Models\PrayerSchadule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PraySchaduleController extends Controller
 {
 
     public function index(Request $request)
     {
-        $startDate = $request->query('start_date', date('Y-m-1'));
-        $endDate = $request->query('end_date', date('Y-m-15'));
-        $praySchadules = PrayerSchadule::whereBetween('date', [$startDate, $endDate])
+        $monthList = [
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
+        ];
+
+        $month = $request->query('month', date('m'));
+        $praySchadules = PrayerSchadule::whereMonth('date', $month)
             ->paginate(10)->withQueryString();
 
-        return response()->view('admin.prayer.index', compact('praySchadules'));
+        return response()->view('admin.prayer.index', compact('praySchadules', 'month', 'monthList'));
+    }
+
+    public function changeAudio(Request $request)
+    {
+        $request->validate(['audio' => ['required', 'mimes:mp3']]);
+
+        $file = Storage::path('public/storage/adzan.mp3');
+        if (File::exists($file)) {
+            File::delete($file);
+        }
+
+        $request->file('audio')
+            ->storePubliclyAs('audio', 'adzan.mp3', 'public');
+
+        return redirect()->route('pray.index')->with('msg', 'berhasing mengganti audio');
     }
 
     public function updatePraySchadule()
     {
-        $startDate = 1;
-        $success = 0;
         $error = 0;
+        $success = 0;
+        $startDate = 1;
+
         $date = Carbon::now();
         $daysInMonth = Carbon::now()->daysInMonth;
 
@@ -35,14 +67,16 @@ class PraySchaduleController extends Controller
 
             if ($request->successful()) {
                 $schedule = $request->object()->jadwal->data;
-                PrayerSchadule::create([
-                    'subuh' =>  $this->_formatTimeSchadule($schedule->subuh),
-                    'dhuhur' => $this->_formatTimeSchadule($schedule->dzuhur),
-                    'ashar' => $this->_formatTimeSchadule($schedule->ashar),
-                    'manggrip' => $this->_formatTimeSchadule($schedule->maghrib),
-                    'isya' => $this->_formatTimeSchadule($schedule->isya),
-                    'date' => $newDate
-                ]);
+                if (PrayerSchadule::whereDate('date', $newDate)->count() < 1) {
+                    PrayerSchadule::create([
+                        'subuh' =>  $this->_formatTimeSchadule($schedule->subuh),
+                        'dhuhur' => $this->_formatTimeSchadule($schedule->dzuhur),
+                        'ashar' => $this->_formatTimeSchadule($schedule->ashar),
+                        'manggrip' => $this->_formatTimeSchadule($schedule->maghrib),
+                        'isya' => $this->_formatTimeSchadule($schedule->isya),
+                        'date' => $newDate
+                    ]);
+                }
                 $success++;
             } else {
                 $error++;

@@ -16,9 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-            Log::info('update jadwal shalat');
-        });
+        $schedule->call('App\Http\Controllers\PraySchaduleController@updatePraySchadule');
     }
 
     /**
