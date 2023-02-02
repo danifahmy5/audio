@@ -35,7 +35,7 @@ class HomeController extends Controller
                     'name' => $this->prayAudio,
                     'audio' => asset("storage/audio/$this->prayAudio"),
                     'cover' => asset('bg') . '/' . $backgrounds[array_rand($backgrounds)],
-                    'id' => $key,
+                    'id' => 0,
                     'artist' => 'Dani fahmy rosyid'
                 ];
 
@@ -43,7 +43,7 @@ class HomeController extends Controller
                     'name' => 'setelah-sholat.mp3',
                     'audio' => asset("storage/audio/setelah-sholat.mp3"),
                     'cover' => asset('bg') . '/' . $backgrounds[array_rand($backgrounds)],
-                    'id' => $key,
+                    'id' => 1,
                     'artist' => 'Dani fahmy rosyid'
                 ];
             }

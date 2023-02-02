@@ -46,7 +46,7 @@
         </div>
         <div class="sound-control">
             <i class="fas fa-volume-down"></i>
-            <input type="range" max="100" value="{{ $schadules->volume }}" step="1" />
+            <input type="range" max="100" value="{{ is_null($schadules) ? 100 :  $schadules->volume }}" step="1" />
             <i class="fas fa-volume-up"></i>
         </div>
         <audio src="{{ $dirAudio[0]['audio'] }}"></audio>
