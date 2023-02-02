@@ -43,12 +43,12 @@
 
         });
 
-        setTimeout('windowClose()', 300000);
+        const duration = document.getElementById('my-duration').value;
+        const timeout = parseInt(duration) * 60 * 1000
 
-        function windowClose() {
-            window.open('', '_parent', '');
+        setTimeout(() => {
             window.close();
-        }
+        }, timeout);
     </script>
 </body>
 

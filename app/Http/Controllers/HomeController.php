@@ -19,14 +19,13 @@ class HomeController extends Controller
         $backgrounds = Storage::disk('bg')->allFiles();
 
         $praySchadule = PrayerSchadule::where('date', '=', date('Y-m-d'))
-            ->where(DB::raw("CONCAT(subuh, dhuhur, ashar, manggrip, isya)"), 'LIKE', '%' . date('H:i') . '%')->first();
-
+            ->where(DB::raw("CONCAT(subuh, dhuhur, ashar, manggrip, isya)"), 'LIKE', '%' . date('H:i:00') . '%')->first();
+ 
         $schadules = Schadule::whereHas('times', function ($q) {
             return $q->whereTime('time', date('H:i:00'))->where('day', date('l'));
         })->where('status', true)->first();
-
-
-        $$dirAudio = [];
+        
+        $dirAudio = [];
         // mengecek apakah ada jadwal shalat
         if (!is_null($praySchadule)) {
             $file = Storage::path("public/audio/$this->prayAudio");
@@ -70,9 +69,7 @@ class HomeController extends Controller
             }
         }
 
-
-
-
+ 
         if (count($dirAudio) < 1) {
             return view('notfound');
         }
