@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
-    private string $prayAudio = 'sholat.mp3'; 
+    private string $prayAudio = 'sholat.mp3';
 
     public function index()
     {
@@ -25,7 +25,8 @@ class HomeController extends Controller
             return $q->whereTime('time', date('H:i:00'))->where('day', date('l'));
         })->where('status', true)->first();
 
-        $dirAudio = [];
+
+        $$dirAudio = [];
         // mengecek apakah ada jadwal shalat
         if (!is_null($praySchadule)) {
             $file = Storage::path("public/audio/$this->prayAudio");

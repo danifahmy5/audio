@@ -65,12 +65,10 @@
                                 <select class="select2 form-control" multiple type="text" name="days[]" id="days"
                                     class="form-control" placeholder="masukkan nama">
                                     @foreach ($days as $day)
-                                        @foreach ($selected_days as $sd)
-                                            <option {{ $day->value == $sd ? 'selected' : '' }}
-                                                value="{{ $day->value }}">
-                                                {{ $day->name }}
-                                            </option>
-                                        @endforeach
+                                        <option {{ in_array($day->value, $selected_days) ? 'selected' : '' }}
+                                            value="{{ $day->value }}">
+                                            {{ $day->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('days')
@@ -84,12 +82,10 @@
                                 <select class="select2 form-control" multiple type="text" name="times[]" id="times"
                                     class="form-control" placeholder="masukkan nama">
                                     @foreach ($times as $time)
-                                        @foreach ($selected_times as $st)
-                                            <option {{ $time . ':00' == $st ? 'selected' : '' }}
-                                                value="{{ $time }}">
-                                                {{ $time }}
-                                            </option>
-                                        @endforeach
+                                        <option {{ in_array($time . ':00', $selected_times) ? 'selected' : '' }}
+                                            value="{{ $time }}">
+                                            {{ $time }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('times')

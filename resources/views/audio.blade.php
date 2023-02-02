@@ -2,80 +2,54 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/4074b6dd70.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="vanilla-js-audio-player-main/styles/style.css" />
-    <title>Audio Player</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Script Tutorials" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>{{ env('APP_NAME') }}</title>
+
+    <!-- add styles and scripts -->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/musicplayer.js') }}"></script>
+    <!-- Add the slick-theme.css if you want default styling -->
 </head>
 
-<body>
-    <input type="hidden" value="{{ json_encode($dirAudio) }}" id="my-audio-list">
+<body style="background-image: url({{ $dirAudio[0]['cover'] }});background-size: cover;">
     <input type="hidden" value="{{ is_null($schadules) ? 10 : $schadules->duration }}" id="my-duration">
-    <div class="app">
-        <nav>
-            <span id="connect-link">
-                <a href="{{ route('login') }}"
-                    style="color: white;
-                text-decoration-line: none;">Login</a>
-
-            </span>
-            <span id="library-link">Library</span>
-        </nav>
-        <div class="song-info">
-            <img class="play-pause" src="{{ $dirAudio[0]['cover'] }}" alt="" />
-            <div>
-                <h2>{{ $dirAudio[0]['name'] }}</h2>
-                <h3>Dani Fahmy Rosyid</h3>
-            </div>
-        </div>
-        <div class="player">
-            <div>
-                <input type="range" />
-                <div></div>
-            </div>
-            <span>start</span>
-            <span>end</span>
-        </div>
-        <div class="player-control">
-            <i class="fas fa-backward" id="backward"></i>
-            <i class="fas fa-play" id="play-pause"></i>
-            <i class="fas fa-forward" id="forward"></i>
-        </div>
-        <div class="sound-control">
-            <i class="fas fa-volume-down"></i>
-            <input type="range" max="100" value="{{ is_null($schadules) ? 100 :  $schadules->volume }}" step="1" />
-            <i class="fas fa-volume-up"></i>
-        </div>
-        <audio src="{{ $dirAudio[0]['audio'] }}"></audio>
-    </div>
-    <div class="library">
-        <h2>Library</h2>
-        @foreach ($dirAudio as $audio)
-            <div class="library-song {{ $loop->index == 0 ? 'selected' : '' }}" id="{{ $audio['id'] }}">
-                <img src="{{ $audio['cover'] }}" alt="" />
-                <div class="library-song-info">
-                    <h3>{{ $audio['name'] }}</h3>
-                    <h4>Dani Fahmy Rosyid</h4>
-                </div>
-            </div>
-        @endforeach
-        <div class="add-song">Add Song <i class="far fa-plus-square"></i></div>
+    <div class="music-player">
+        <ul class="playlist">
+            @foreach ($dirAudio as $item)
+                <li data-cover="{{ $item['cover'] }}" data-artist="{{ $item['artist'] }}">
+                    <a href="{{ $item['audio'] }}">
+                        {{ $item['name'] }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
     </div>
     <script>
-        const duration = document.getElementById('my-duration').value;
-        const timeout = parseInt(duration) * 60 * 1000
+        $(".music-player").musicPlayer({
+            elements: ['artwork', 'information', 'controls', 'progress', 'time',
+                'volume'
+            ], // ==> This will display in  the order it is inserted
+            elements: ['controls', 'information', 'artwork', 'progress', 'time', 'volume'],
+            controlElements: ['backward', 'play', 'forward', 'stop'],
+            timeElements: ['current', 'duration'],
+            timeSeparator: " : ", // ==> Only used if two elements in timeElements option
+            infoElements: ['title', 'artist'],
+            volume: 50,
+            autoPlay: true,
+            loop: false,
 
-        setTimeout(() => {
+        });
+
+        setTimeout('windowClose()', 300000);
+
+        function windowClose() {
+            window.open('', '_parent', '');
             window.close();
-        }, timeout);
+        }
     </script>
-
-    <script src="vanilla-js-audio-player-main/scripts/songs.js"></script>
-    <script src="vanilla-js-audio-player-main/scripts/app.js"></script>
-
 </body>
 
 </html>
