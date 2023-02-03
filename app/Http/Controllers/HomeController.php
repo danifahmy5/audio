@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 
 class HomeController extends Controller
 {
@@ -73,6 +75,8 @@ class HomeController extends Controller
         if (count($dirAudio) < 1) {
             return view('notfound');
         }
+        
+        Log::alert("run schadule $schadules->name");
         return view('audio', compact('dirAudio', 'schadules'));
     }
 }
