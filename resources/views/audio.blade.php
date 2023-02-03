@@ -16,6 +16,7 @@
 
 <body style="background-image: url({{ $dirAudio[0]['cover'] }});background-size: cover;">
     <input type="hidden" value="{{ is_null($schadules) ? 10 : $schadules->duration }}" id="my-duration">
+    <input type="hidden" value="{{ is_null($schadules) ? 100 : $schadules->volume }}" id="my-volume">
     <div class="music-player">
         <ul class="playlist">
             @foreach ($dirAudio as $item)
@@ -28,6 +29,8 @@
         </ul>
     </div>
     <script>
+        const volume = document.getElementByID('my-volume').volume;
+        console.log(volume);
         $(".music-player").musicPlayer({
             elements: ['artwork', 'information', 'controls', 'progress', 'time',
                 'volume'
@@ -37,7 +40,7 @@
             timeElements: ['current', 'duration'],
             timeSeparator: " : ", // ==> Only used if two elements in timeElements option
             infoElements: ['title', 'artist'],
-            volume: 50,
+            volume: volume,
             autoPlay: true,
             loop: false,
 
