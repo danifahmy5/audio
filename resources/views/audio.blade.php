@@ -29,7 +29,7 @@
         </ul>
     </div>
     <script>
-        const volume = document.getElementByID('my-volume').volume;
+        const volume = document.getElementById('my-volume').value;
         console.log(volume);
         $(".music-player").musicPlayer({
             elements: ['artwork', 'information', 'controls', 'progress', 'time',
