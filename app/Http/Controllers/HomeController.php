@@ -69,14 +69,14 @@ class HomeController extends Controller
                 }
                 shuffle($dirAudio);
             }
-        }
-
- 
+        } 
+        
         if (count($dirAudio) < 1) {
             return view('notfound');
         }
+        $message = is_null($schadules) ? 'pemberitahuan sholat' : $schadules->name;
         
-        Log::alert("run schadule" . is_null($schadules) ? 'pemberitahuan sholat' : $schadules->name);
+        Log::alert("run schadule " . $message);
         return view('audio', compact('dirAudio', 'schadules'));
     }
 }
