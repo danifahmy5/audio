@@ -76,7 +76,7 @@ class HomeController extends Controller
             return view('notfound');
         }
         
-        Log::alert("run schadule $schadules->name");
+        Log::alert("run schadule" . is_null($schadules) ? 'pemberitahuan sholat' : $schadules->name);
         return view('audio', compact('dirAudio', 'schadules'));
     }
 }
