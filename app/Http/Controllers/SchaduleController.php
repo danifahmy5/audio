@@ -66,7 +66,7 @@ class SchaduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
 
         $request->validate([
             'name' => ['required', 'unique:schadules,name'],
@@ -153,14 +153,14 @@ class SchaduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    { 
         $schadule = Schadule::findOrFail($id);
 
         $schadule->update([
             'name' => $request->input('name'),
             'volume' => $request->input('volume', 80),
             'duration' => $request->input('duration'),
-            'shuffle' => $request->input('shuffle', false)
+            'shuffle' => $request->input('shuffle') ? true : false
         ]);
 
         SchaduleDetail::where(['schadule_id' => $id])->delete();

@@ -83,7 +83,7 @@ class PraySchaduleController extends Controller
             }
         }
 
-        Log::info("berhasil update jadwal shalat success $success error $error");
+        Log::channel('slack')->info("berhasil update jadwal shalat success $success error $error");
         return redirect()->route('pray.index');
     }
 
