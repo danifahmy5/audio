@@ -64,6 +64,7 @@ class PraySchaduleController extends Controller
         for ($i = $startDate; $i <= $daysInMonth; $i++) {
             $newDate = Carbon::create($date->year, $date->month, $i)->format('Y-m-d');
             $request = Http::get("https://api.banghasan.com/sholat/format/json/jadwal/kota/744/tanggal/$newDate");
+            dd($request->body());
 
             if ($request->successful()) {
                 $schedule = $request->object()->jadwal->data;
@@ -83,7 +84,7 @@ class PraySchaduleController extends Controller
             }
         }
 
-        Log::channel('slack')->info("berhasil update jadwal shalat success $success error $error");
+        Log::info("berhasil update jadwal shalat success $success error $error");
         return redirect()->route('pray.index');
     }
 

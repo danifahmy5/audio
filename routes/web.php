@@ -25,6 +25,7 @@ Auth::routes();
 
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/test-connection', [HomeController::class, 'testConnection']);
 Route::middleware('auth')->group(function () {
     Route::resource('schadules', SchaduleController::class);
     Route::resource('audio', AudioController::class)->except('show');

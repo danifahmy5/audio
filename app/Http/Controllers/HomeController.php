@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Log; 
 
 class HomeController extends Controller
 {
@@ -22,11 +21,12 @@ class HomeController extends Controller
 
         $praySchadule = PrayerSchadule::where('date', '=', date('Y-m-d'))
             ->where(DB::raw("CONCAT(subuh, dhuhur, ashar, manggrip, isya)"), 'LIKE', '%' . date('H:i:00') . '%')->first();
- 
+        
         $schadules = Schadule::whereHas('times', function ($q) {
             return $q->whereTime('time', date('H:i:00'))->where('day', date('l'));
         })->where('status', true)->first();
-        
+         
+
         $dirAudio = [];
         // mengecek apakah ada jadwal shalat
         if (!is_null($praySchadule)) {
@@ -78,5 +78,16 @@ class HomeController extends Controller
         
         Log::alert("run schadule " . $message);
         return view('audio', compact('dirAudio', 'schadules'));
+    }
+
+    public function testConnection()
+    {
+        try {
+		$pdo = DB::connection()->getPdo();
+		$databaseName = $pdo->query('SELECT DATABASE()')->fetchColumn();
+            echo "Koneksi database " . $databaseName . " berhasil!";
+        } catch (\Exception $e) {
+            die("Koneksi database gagal: " . $e->getMessage());
+        }
     }
 }
