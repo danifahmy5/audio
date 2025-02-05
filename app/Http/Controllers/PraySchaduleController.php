@@ -52,6 +52,40 @@ class PraySchaduleController extends Controller
         return redirect()->route('pray.index')->with('msg', 'berhasing mengganti audio');
     }
 
+    public function updatePraySchaduleV2()
+    {
+        $date = Carbon::now();
+        $year = $date->year;
+        $month = $date->month;
+        $request = Http::get("https://api.myquran.com/v2/sholat/jadwal/1604/$year/$month");
+        if ($request->successful()) {
+            $response = $request->object();
+            $insertData = [];
+            foreach ($response->data->jadwal as $key => $schadule) {
+                $newDate = $schadule->date;
+                if (PrayerSchadule::whereDate('date', $newDate)->count() < 1) {
+                    $insertData[] = [
+                        'subuh' =>  $this->_formatTimeSchadule($schadule->subuh),
+                        'dhuhur' => $this->_formatTimeSchadule($schadule->dzuhur),
+                        'ashar' => $this->_formatTimeSchadule($schadule->ashar),
+                        'manggrip' => $this->_formatTimeSchadule($schadule->maghrib),
+                        'isya' => $this->_formatTimeSchadule($schadule->isya),
+                        'date' => $newDate
+                    ];
+                }
+            }
+            PrayerSchadule::insert($insertData);
+        }else {
+            Log::error("======================error update pray schadule=================");
+            Log::error($request->body());
+        }
+
+        return redirect()->route('pray.index');
+
+
+
+    }
+
     public function updatePraySchadule()
     {
         $error = 0;

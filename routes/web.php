@@ -32,6 +32,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('schadules/{id}/toggle', [SchaduleController::class, 'toggle'])->name('schadules.toggle');
     Route::get('prayer', [PraySchaduleController::class, 'index'])->name('pray.index');
-    Route::get('prayer/sync', [PraySchaduleController::class, 'updatePraySchadule'])->name('pray.sync');
+    Route::get('prayer/sync', [PraySchaduleController::class, 'updatePraySchaduleV2'])->name('pray.sync');
     Route::post('prayer', [PraySchaduleController::class, 'changeAudio'])->name('pray.changeAudio');
 });
